@@ -1,0 +1,55 @@
+server:
+  port: 8081
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml #指定mapper的类路径
+logging:
+  level:
+    com.springboot.mybatis: debug #配置日志级别，这里是为了查看sql语句
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/testDB #提前创建好数据库testDB,否则会启动失败
+    username: root
+    password: 123123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  profiles:
+    active: redisDruid
+  sql:
+    init:
+      schema-locations:
+        - classpath:sql/user.sql #结合下面的initialization-mode=always会在应用启动的时候执行指定文件的中的sql
+      mode: always
+
+
+---
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/testDB
+    username: root
+    password: 123123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource #显式的指定druid数据源,将会覆盖默认的Hikari数据源，后面的参数需要显式的绑定到自定义的DruidConfig配置类中
+    initialSize: 20
+    maxActive: 30
+    minIdle: 10
+    filters: stat,wall #去掉后，sql监控界面无法统计，这里wall用于防火墙
+  redis:
+    host: localhost #docker run -d -p 6379:6379 --name myredis redis
+    port: 6379
+    password:
+    timeout: 20000ms #连接超时时间
+    lettuce:
+      pool: #这里使用redis连接池，需要引入commons-pool2依赖
+        max-active: 1000 #连接池能维持的最大连接数，负数表示没有数量限制
+        max-idle: 200 #连接池最大空闲连接,即使没有数据库连接时依然可以保持200个空闲连接，而不被清除，随时处于待命状态
+        min-idle: 20 #连接池最小空闲连接数
+        max-wait: 3000ms #连接池出借连接的最长期限，单位是毫秒，比如设为10000ms，客户端从连接池获取（借出）一个连接后，10000毫秒没有归还（return），则连接池会抛出异常。负数为不限制
+  config:
+    activate:
+      on-profile: redisDruid
+
+
+
+
+
+
+

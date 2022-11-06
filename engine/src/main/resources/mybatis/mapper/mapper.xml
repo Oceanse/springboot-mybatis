@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.mybatis.mapper.xml.UserMapper"><!--namespace就是mapper接口的全类名-->
+    <select id="queryUserList" resultType="com.springboot.mybatis.model.User"><!--id是namespace下的方法名，resultType这里是实体类的全类名-->
+        SELECT * FROM user<!--这里关键字不区分大小写select * from user-->
+    </select>
+
+    <select id="queryUserByID" resultType="com.springboot.mybatis.model.User"><!--id是namespace下的方法名，resultType这里是实体类的全类名-->
+        select * from user where id= #{id}
+    </select>
+
+    <insert id="addUser" parameterType="com.springboot.mybatis.model.User"><!--id是namespace下的方法名，resultType这里是实体类的全类名-->
+        insert into user(id,name,password) values (#{id},#{name},#{password})
+    </insert>
+
+    <update id="updateUser" parameterType="com.springboot.mybatis.model.User"><!--id是namespace下的方法名，resultType这里是实体类的全类名-->
+        update user set name=#{name},password=#{password} where id=#{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="int">
+        delete from user where id=#{id}
+    </delete>
+</mapper>

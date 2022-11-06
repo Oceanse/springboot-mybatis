@@ -1,0 +1,4 @@
+com\springboot\mybatis\controller\annotation\UserMapperAnnotationController.class
+com\springboot\mybatis\connectionTest\SpringBootMybatisTest.class
+com\springboot\mybatis\BootApplication.class
+com\springboot\mybatis\controller\xml\UserMapperXmlController.class
