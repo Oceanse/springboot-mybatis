@@ -10,7 +10,7 @@ import java.util.List;
  * 基于mapper.xml开发
  */
 @Mapper
-@Repository
+//@Repository //测试发现可以省略
 public interface UserMapper {
     List<User> queryUserList();
 
